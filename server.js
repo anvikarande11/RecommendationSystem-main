@@ -1,35 +1,30 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;  // Using 3001 to avoid v0 port proxy on 3000
 
-// Minimal middleware
+// Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Test endpoint
-app.get('/ping', (req, res) => {
-    console.log('[PING] Health check');
-    res.json({ pong: true });
-});
+// API Routes
+const authRoutes = require('./routes/auth');
+const curatorRoutes = require('./routes/curator');
+const vaultRoutes = require('./routes/vault');
 
-// Index
-app.get('/', (req, res) => {
-    console.log('[INDEX] Serving index.htm');
-    res.sendFile(path.join(__dirname, 'public', 'index.htm'));
-});
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/curator', curatorRoutes);
+app.use('/api/v1', vaultRoutes);
 
-// Catch all for SPA
-app.get('*', (req, res) => {
-    console.log('[CATCH-ALL] Path:', req.path);
+// SPA Fallback
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.htm'));
 });
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server listening on port ${PORT}`);
+    console.log(`Aevora Engine Running on http://127.0.0.1:${PORT}`);
 });
 
 process.on('SIGTERM', () => {
