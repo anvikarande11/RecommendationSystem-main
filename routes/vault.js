@@ -190,11 +190,18 @@ function buildMockRecommendations(domain, vibes, profile = { tags: {}, likes: []
 }
 
 async function fetchJson(url, options = {}) {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-        throw new Error(`Upstream error ${response.status} for ${url}`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    
+    try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        if (!response.ok) {
+            throw new Error(`Upstream error ${response.status} for ${url}`);
+        }
+        return response.json();
+    } finally {
+        clearTimeout(timeoutId);
     }
-    return response.json();
 }
 
 async function fetchMovies(vibes) {
