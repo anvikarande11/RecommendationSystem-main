@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "b7594ea1-fccf-47cc-8070-ace819841320",
+      "name": "Anvi",
+      "email": "anvi@example.com",
+      "passwordHash": "bd94dcda26fccb4e68d6a31f9b5aac0b571ae266d822620e901ef7ebe3a11d4f",
+      "avatar": "",
+      "createdAt": "2026-05-05T19:26:08.374Z"
+    },
+    {
+      "id": "d211d21e-6f35-4d1a-b201-4a083aabff51",
+      "name": "Anvi Karande",
+      "email": "anvikarande34@gmail.com",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "avatar": "",
+      "createdAt": "2026-05-05T19:27:58.710Z"
+    },
+    {
+      "id": "02ca9e31-b837-4abd-b533-003c71f577fc",
+      "name": "Anvi Ajay Karande",
+      "email": "anvikarande52@gmail.com",
+      "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "avatar": "",
+      "createdAt": "2026-05-06T04:41:07.193Z"
+    }
+  ]
+}

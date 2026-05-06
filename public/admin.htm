@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aevora Admin</title>
+    <style>
+        :root { --bg:#0f172a; --panel:#111c36; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --accent:#60a5fa; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; }
+        *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Roboto,sans-serif}
+        body{background:var(--bg);color:var(--text);min-height:100vh;display:grid;grid-template-columns:240px 1fr}
+        aside{background:#0b1224;border-right:1px solid #1f2a44;padding:16px}
+        .brand{font-size:1.1rem;font-weight:700;margin-bottom:18px}
+        .nav-item{display:block;padding:10px;border-radius:10px;color:var(--muted);margin-bottom:6px}
+        .nav-item.active,.nav-item:hover{background:#1a2742;color:#dbeafe}
+        main{padding:20px}
+        .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+        .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+        .kpi{background:var(--panel);padding:12px;border:1px solid #22304f;border-radius:12px}
+        .kpi h4{color:var(--muted);font-size:.78rem;margin-bottom:6px}
+        .kpi p{font-size:1.4rem;font-weight:700}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .card{background:var(--card);border:1px solid #2a395d;border-radius:12px;padding:12px}
+        .list{margin-top:8px}
+        .list li{display:flex;justify-content:space-between;border-bottom:1px solid #2a395d;padding:7px 0;font-size:.86rem}
+        .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+        @media(max-width:860px){body{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <aside>
+        <div class="brand">AEVORA Admin</div>
+        <a class="nav-item active" href="#">Overview</a>
+        <a class="nav-item" href="/index.htm">Go to App</a>
+        <a class="nav-item" href="#">Users</a>
+        <a class="nav-item" href="#">Recommendations</a>
+        <a class="nav-item" href="#">Content Moderation</a>
+    </aside>
+    <main>
+        <div class="head">
+            <h2>Recommendation Analytics Dashboard</h2>
+            <button onclick="loadSummary()" style="padding:8px 12px;border-radius:9px;border:1px solid #2a395d;background:#1f2d49;color:#dbeafe;cursor:pointer;">Refresh</button>
+        </div>
+        <section class="kpis">
+            <div class="kpi"><h4>Total Users</h4><p id="users">0</p></div>
+            <div class="kpi"><h4>Total Searches</h4><p id="searches">0</p></div>
+            <div class="kpi"><h4>Likes</h4><p id="likes" class="ok">0</p></div>
+            <div class="kpi"><h4>Dislikes</h4><p id="dislikes" class="bad">0</p></div>
+            <div class="kpi"><h4>Engagement Rate</h4><p id="engagement" class="warn">0</p></div>
+        </section>
+        <section class="grid">
+            <article class="card">
+                <h3>Most Liked Items</h3>
+                <ul id="top-liked" class="list"></ul>
+            </article>
+            <article class="card">
+                <h3>Most Disliked Items</h3>
+                <ul id="top-disliked" class="list"></ul>
+            </article>
+        </section>
+    </main>
+    <script>
+        const DEFAULT_API_PORT = '3000';
+        const API_BASE = (() => {
+            if (typeof window.__AEVORA_API_BASE__ === 'string' && window.__AEVORA_API_BASE__.length) {
+                return window.__AEVORA_API_BASE__.replace(/\/$/, '');
+            }
+            if (location.protocol === 'file:') return `http://127.0.0.1:${DEFAULT_API_PORT}`;
+            return '';
+        })();
+        function apiUrl(path) {
+            const p = path.startsWith('/') ? path : `/${path}`;
+            return `${API_BASE}${p}`;
+        }
+        function formatFetchError(err) {
+            const msg = err && err.message ? String(err.message) : 'Request failed';
+            if (/Failed to fetch|NetworkError|Load failed/i.test(msg)) {
+                if (location.protocol === 'file:') {
+                    return 'Open this app via http://127.0.0.1:' + DEFAULT_API_PORT + '/admin.htm (not as a local file).';
+                }
+                return 'Cannot reach API. Start the server with npm start.';
+            }
+            return msg;
+        }
+        function renderList(el, rows) {
+            el.innerHTML = '';
+            if (!rows.length) {
+                el.innerHTML = '<li><span>No data yet</span><span>0</span></li>';
+                return;
+            }
+            for (const row of rows) {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${row.title}</span><strong>${row.count}</strong>`;
+                el.appendChild(li);
+            }
+        }
+        async function loadSummary() {
+            let res;
+            try {
+                res = await fetch(apiUrl('/api/v1/admin/summary'));
+            } catch (e) {
+                alert(formatFetchError(e));
+                return;
+            }
+            let data;
+            try {
+                data = await res.json();
+            } catch {
+                alert('Invalid response from admin API.');
+                return;
+            }
+            if (!data.success) {
+                alert(data.error || 'Could not load analytics.');
+                return;
+            }
+            const a = data.analytics;
+            document.getElementById('users').textContent = a.users;
+            document.getElementById('searches').textContent = a.searchCount;
+            document.getElementById('likes').textContent = a.likeCount;
+            document.getElementById('dislikes').textContent = a.dislikeCount;
+            document.getElementById('engagement').textContent = a.engagementRate;
+            renderList(document.getElementById('top-liked'), a.topLiked || []);
+            renderList(document.getElementById('top-disliked'), a.topDisliked || []);
+        }
+        loadSummary();
+    </script>
+</body>
+</html>

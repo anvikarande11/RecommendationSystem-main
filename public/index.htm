@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aevora | Cinematic AI Discovery</title>
+    <style>
+        :root {
+            --bg: #f4f8ff;
+            --bg-2: #eaf2ff;
+            --accent: #4a90ff;
+            --accent-glow: rgba(74, 144, 255, 0.45);
+            --navy: #1e2b4d;
+            --card: #ffffff;
+            --glass: rgba(255, 255, 255, 0.62);
+            --muted: #6d7c9f;
+            --border: rgba(30, 43, 77, 0.12);
+            --shadow: 0 12px 40px rgba(64, 99, 171, 0.14);
+            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74, 144, 255, 0.2), transparent);
+        }
+        body.theme-night {
+            --bg: #0c1222;
+            --bg-2: #151d33;
+            --navy: #e8edff;
+            --card: #1a2438;
+            --glass: rgba(22, 32, 56, 0.75);
+            --muted: #9aa8c7;
+            --border: rgba(120, 140, 190, 0.15);
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(96, 165, 250, 0.25), transparent);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Roboto, sans-serif; }
+        body { background: radial-gradient(circle at 8% 5%, #ffffff, var(--bg) 35%, var(--bg-2)); color: var(--navy); min-height: 100vh; overflow-x: hidden; transition: background .6s ease, color .4s ease; }
+        body.theme-night { background: radial-gradient(circle at 10% 0%, #1a2744, var(--bg) 40%, #0a0f1a); }
+        a { color: inherit; text-decoration: none; }
+        .splash {
+            position: fixed; inset: 0; background: radial-gradient(circle at 50% 10%, #ffffff, #dce9ff 45%, #b9d3ff);
+            display: grid; place-items: center; z-index: 2000; transition: opacity .8s ease, visibility .8s ease;
+        }
+        .splash.hide { opacity: 0; visibility: hidden; }
+        .logo-wrap { text-align: center; animation: rise 1.2s ease; }
+        .logo { font-size: 3rem; letter-spacing: 2px; font-weight: 700; color: var(--navy); }
+        .tagline { color: #314472; margin-top: 8px; }
+        .dot-field { margin-top: 18px; display:flex; gap:8px; justify-content:center; }
+        .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s infinite; }
+        .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+        .app { max-width: 1280px; margin: 0 auto; padding: 18px; }
+        .topnav { display:flex; justify-content:space-between; align-items:center; background: var(--glass); border:1px solid var(--border); box-shadow: var(--shadow); border-radius: 18px; padding: 10px 16px; backdrop-filter: blur(12px); position: sticky; top: 12px; z-index: 20; }
+        .brand { display:flex; align-items:center; gap:10px; font-weight:700; }
+        .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(145deg,#4a90ff,#7ec6ff); box-shadow: inset 0 0 16px #ffffffa8; }
+        .brand-sub { color: var(--muted); font-size: .82rem; font-weight: 500; }
+        .nav-actions { display:flex; gap: 8px; align-items:center; }
+        .pill { padding: 8px 12px; border-radius: 999px; border:1px solid var(--border); background: #fff; font-size:.85rem; cursor: pointer; }
+        .hero {
+            margin-top: 16px; position: relative; overflow: hidden;
+            background: linear-gradient(125deg,#ffffffd9,#edf4ff8f);
+            border-radius: 26px; border:1px solid var(--border); box-shadow: var(--shadow);
+            padding: 30px; display:grid; grid-template-columns: 1.15fr 1fr; gap:24px; align-items: stretch;
+        }
+        .hero::before { content: ''; position: absolute; inset: 0; background: var(--hero-glow); pointer-events: none; }
+        .hero > div:first-child { position: relative; z-index: 1; }
+        .hero h1 { font-size: 2.35rem; line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.02em; }
+        .hero-kicker { font-size: .82rem; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+        .hero-rotator { min-height: 2.6rem; font-size: 1.05rem; color: var(--muted); margin-bottom: 14px; transition: opacity .4s ease; }
+        .hero p { color: var(--muted); margin-bottom: 14px; }
+        .controls { display:grid; grid-template-columns: 170px 1fr 100px 44px; gap:10px; align-items: stretch; }
+        input, select, button { border-radius: 12px; border:1px solid var(--border); padding: 12px; }
+        input, select { background: #fff; color: var(--navy); }
+        button.primary { background: linear-gradient(90deg,#4a90ff,#76b6ff); color: #fff; font-weight: 700; cursor: pointer; }
+        .hero-side {
+            position: relative; z-index: 1;
+            border-radius: 20px; min-height: 260px;
+            background: linear-gradient(145deg, rgba(74,144,255,.12), rgba(126,198,255,.08));
+            border:1px solid var(--border);
+            display:flex; flex-direction: column; justify-content: space-between;
+            padding: 18px; text-align: left;
+        }
+        .hero-side h3 { font-size: 1.15rem; }
+        .hero-side p { margin-top:6px; color: var(--muted); font-size: .88rem; }
+        .radar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; }
+        .radar-wrap svg { filter: drop-shadow(0 6px 16px var(--accent-glow)); }
+        .dna-summary { font-size: .78rem; color: var(--muted); line-height: 1.35; text-align: center; }
+        .mood-strip-wrap { margin: 18px 0 6px; }
+        .mood-strip-title { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 10px; font-weight: 600; }
+        .mood-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+        .mood-pill {
+            padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card);
+            font-size: .78rem; cursor: pointer; transition: transform .2s ease, box-shadow .25s ease, border-color .2s;
+            white-space: nowrap;
+        }
+        .mood-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 22px var(--accent-glow); }
+        .mood-pill.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: linear-gradient(90deg, rgba(74,144,255,.12), rgba(126,198,255,.08)); }
+        .shop-vibe-section { margin-top: 20px; }
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+        .shop-tile {
+            border-radius: 14px; padding: 12px; border: 1px solid var(--border); background: var(--card);
+            cursor: pointer; font-size: .8rem; font-weight: 600; text-align: left;
+            transition: transform .2s ease, box-shadow .2s;
+            min-height: 72px;
+        }
+        .shop-tile:hover { transform: scale(1.02); box-shadow: var(--shadow); }
+        .shop-tile span { display: block; font-size: .68rem; font-weight: 500; color: var(--muted); margin-top: 4px; }
+        .visual-btn {
+            border-radius: 12px; border:1px solid var(--border); background: var(--card); cursor: pointer;
+            font-size: 1.1rem; display: grid; place-items: center; transition: transform .15s;
+        }
+        .visual-btn:hover { transform: scale(1.05); }
+        .ac-wrap { position: relative; }
+        .ac-menu {
+            position: absolute; left: 0; right: 0; top: calc(100% + 4px); background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; box-shadow: var(--shadow); max-height: 200px; overflow-y: auto; z-index: 50; display: none;
+        }
+        .ac-menu.open { display: block; }
+        .ac-item { padding: 10px 12px; font-size: .85rem; cursor: pointer; }
+        .ac-item:hover, .ac-item.active { background: rgba(74,144,255,.12); }
+        .row-title { display:flex; justify-content:space-between; align-items:center; margin: 22px 0 10px; }
+        .row-title h2 { font-size: 1.1rem; }
+        .row { display:grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+        .card {
+            background: var(--card); border:1px solid var(--border); border-radius: 16px;
+            box-shadow: 0 8px 24px #6c9ef01f; overflow: visible; position: relative;
+            transition: transform .35s cubic-bezier(.25,.8,.25,1), box-shadow .35s ease;
+        }
+        .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 22px 48px rgba(74, 144, 255, 0.18); z-index: 5; }
+        .card .cover-wrap { overflow: hidden; border-radius: 16px 16px 0 0; perspective: 900px; }
+        .card:hover .cover { transform: rotateY(-6deg) scale(1.06); }
+        .cover { width:100%; height: 168px; object-fit: cover; background: #dce9ff; transition: transform .45s cubic-bezier(.25,.8,.25,1); }
+        .card-preview {
+            position: absolute; left: 8px; right: 8px; bottom: 100%; margin-bottom: -56px; padding: 10px;
+            background: var(--glass); backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 12px;
+            font-size: .72rem; color: var(--navy); opacity: 0; pointer-events: none; transform: translateY(8px);
+            transition: opacity .3s ease, transform .3s ease; z-index: 8; box-shadow: var(--shadow);
+        }
+        .card:hover .card-preview { opacity: 1; transform: translateY(0); }
+        .insight-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+        .insight-badge {
+            font-size: .62rem; padding: 3px 8px; border-radius: 999px;
+            background: linear-gradient(90deg, rgba(74,144,255,.2), rgba(126,198,255,.15)); border: 1px solid var(--border);
+            font-weight: 600;
+        }
+        .card-body { padding: 11px; }
+        .title { font-size: .92rem; min-height: 38px; margin-bottom: 5px; }
+        .meta { color: var(--muted); font-size: .76rem; margin-bottom: 6px; min-height: 28px; }
+        .stats { display:grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 7px; }
+        .stat { border:1px solid var(--border); border-radius: 9px; font-size: .72rem; padding: 5px 6px; color: #3f5178; background: #f8fbff; }
+        .tags { display:flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+        .tag { font-size: .69rem; background: #e8f1ff; color: #2b4d89; border-radius: 999px; padding: 4px 8px; }
+        .why { font-size: .72rem; color: #48639a; min-height: 34px; margin-bottom: 8px; }
+        .actions { display:flex; gap: 7px; }
+        .icon-btn { flex:1; border:1px solid var(--border); border-radius: 9px; background: #fff; padding: 8px; cursor: pointer; font-size: .74rem; transition: transform .18s ease; }
+        .icon-btn:hover { transform: scale(1.03); }
+        .icon-btn.like.hit { animation: pop .22s ease; }
+        .icon-btn.dislike.hit { animation: swipe .22s ease; }
+        .admin-link { margin-top: 18px; display:inline-block; color: #2b4d89; font-weight: 600; }
+        .auth-overlay {
+            position: fixed; inset: 0; background: #f4f8ffe3; backdrop-filter: blur(7px); display:grid; place-items:center; z-index: 1500;
+        }
+        .auth-card { width: min(460px, 94vw); background: #fff; border:1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); padding: 20px; }
+        .auth-card h3 { margin-bottom: 10px; }
+        .auth-grid { display:grid; gap: 10px; margin-top: 10px; }
+        .auth-error { color: #c2410c; font-size: .85rem; min-height: 20px; }
+        .hidden { display:none !important; }
+        .skeleton { height: 300px; border-radius: 16px; background: linear-gradient(90deg,#edf3ff 0%,#d9e8ff 40%,#c8dfff 50%,#d9e8ff 60%,#edf3ff 100%); background-size: 200% 100%; animation: shimmer 1.2s ease-in-out infinite; }
+        @keyframes shimmer { 0%{background-position:100% 0}100%{background-position:-100% 0} }
+        .toast {
+            position: fixed; bottom: 22px; right: 22px; max-width: min(420px, 92vw); z-index: 3000;
+            background: #1e2b4d; color: #f4f8ff; padding: 14px 16px; border-radius: 14px; font-size: .88rem;
+            box-shadow: 0 16px 40px rgba(30,43,77,.35); display: none; align-items: flex-start; gap: 12px;
+        }
+        .toast.show { display: flex; animation: rise .35s ease; }
+        .toast button { flex-shrink: 0; border: none; background: #4a90ff; color: #fff; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: .8rem; }
+        @keyframes loading { 0%{background-position:0}100%{background-position:100%} }
+        @keyframes pop { from{transform:scale(1)} to{transform:scale(1.1)} }
+        @keyframes swipe { from{transform:translateX(0)} to{transform:translateX(-4px)} }
+        @keyframes pulse { 0%,100%{transform:scale(.9);opacity:.7} 50%{transform:scale(1.1);opacity:1} }
+        @keyframes rise { from{transform:translateY(10px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .curator-fab {
+            position: fixed; bottom: 88px; right: 22px; width: 56px; height: 56px; border-radius: 50%; border: none;
+            background: linear-gradient(145deg, #4a90ff, #7ec6ff); color: #fff; font-size: 1.4rem; cursor: pointer;
+            box-shadow: 0 12px 32px var(--accent-glow); z-index: 2500; transition: transform .2s;
+        }
+        .curator-fab:hover { transform: scale(1.08); }
+        .curator-panel {
+            position: fixed; right: 22px; bottom: 156px; width: min(380px, 94vw); max-height: min(460px, 70vh);
+            background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow);
+            display: none; flex-direction: column; z-index: 2500; overflow: hidden;
+        }
+        .curator-panel.open { display: flex; }
+        .curator-head { padding: 12px 14px; border-bottom: 1px solid var(--border); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .curator-messages { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; font-size: .86rem; }
+        .curator-msg { padding: 10px 12px; border-radius: 12px; max-width: 92%; line-height: 1.4; }
+        .curator-msg.user { align-self: flex-end; background: rgba(74,144,255,.18); }
+        .curator-msg.bot { align-self: flex-start; background: rgba(30,43,77,.06); }
+        .curator-input-row { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border); }
+        .curator-input-row input { flex: 1; border-radius: 10px; border: 1px solid var(--border); padding: 10px; background: var(--card); color: var(--navy); }
+        .onboard-overlay {
+            position: fixed; inset: 0; background: rgba(12, 18, 34, 0.55); backdrop-filter: blur(8px); z-index: 1600;
+            display: none; place-items: center; padding: 16px;
+        }
+        .onboard-overlay.open { display: grid; }
+        .onboard-card {
+            width: min(520px, 100%); background: var(--card); border-radius: 22px; border: 1px solid var(--border);
+            box-shadow: var(--shadow); padding: 22px; max-height: 90vh; overflow-y: auto;
+        }
+        .onboard-card h3 { margin-bottom: 6px; }
+        .onboard-step { margin-top: 14px; }
+        .pick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 8px; }
+        .pick-opt {
+            border-radius: 14px; border: 2px solid var(--border); padding: 12px; cursor: pointer; text-align: center;
+            font-size: .82rem; transition: border-color .2s, box-shadow .2s; background: var(--card);
+        }
+        .pick-opt.selected { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+        .pick-opt .emoji { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+        @media (max-width: 920px) {
+            .hero { grid-template-columns: 1fr; }
+            .controls { grid-template-columns: 1fr 1fr; }
+            .controls select { grid-column: span 2; }
+            #discover-btn { grid-column: span 2; }
+            .visual-btn { grid-column: span 2; height: 44px; }
+        }
+    </style>
+</head>
+<body id="body-root">
+    <div id="splash" class="splash">
+        <div class="logo-wrap">
+            <div class="logo">AEVORA</div>
+            <div class="tagline">Cinematic AI Discovery Engine</div>
+            <div class="dot-field"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        </div>
+    </div>
+
+    <div id="auth-overlay" class="auth-overlay hidden">
+        <div class="auth-card">
+            <h3>Welcome to Aevora</h3>
+            <p style="color:#6d7c9f;">Discover content like Netflix, Amazon, and Pinterest in one AI platform.</p>
+            <div class="auth-grid">
+                <input id="auth-name" type="text" placeholder="Name (for sign up)">
+                <input id="auth-email" type="email" placeholder="Email">
+                <input id="auth-password" type="password" placeholder="Password">
+                <div style="display:flex; gap:8px;">
+                    <button id="signup-btn" class="primary" style="flex:1;">Sign Up</button>
+                    <button id="login-btn" class="primary" style="flex:1;">Login</button>
+                    <button id="guest-btn" style="flex:1;">Guest</button>
+                </div>
+                <button id="google-btn">Continue with Google (Demo)</button>
+                <button id="forgot-btn">Forgot Password (Demo)</button>
+                <div id="auth-error" class="auth-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="app">
+        <nav class="topnav">
+            <div class="brand">
+                <div class="brand-mark"></div>
+                <div>
+                    <div>AEVORA</div>
+                    <div class="brand-sub">Personalized premium recommendations</div>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button type="button" class="pill" id="taste-quiz-btn">Taste Quiz</button>
+                <span id="user-chip" class="pill">Guest</span>
+                <a class="pill" href="/admin.htm">Admin</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div>
+                <div class="hero-kicker" id="hero-kicker">AI curation layer</div>
+                <h1 id="greeting">Good Evening</h1>
+                <div class="hero-rotator" id="hero-rotator">Curated for your midnight creativity.</div>
+                <p>Natural language, mood intelligence, and taste memory — powered by live catalogs + your feedback.</p>
+                <div class="mood-strip-wrap">
+                    <div class="mood-strip-title">Mood channel</div>
+                    <div class="mood-strip" id="mood-strip"></div>
+                </div>
+                <div class="controls">
+                    <select id="rec-type">
+                        <option value="movies">Movies & TV</option>
+                        <option value="products">Products & Gadgets</option>
+                        <option value="dressing">Fashion & Dressing</option>
+                        <option value="music">Music</option>
+                        <option value="books">Books</option>
+                        <option value="food">Food</option>
+                        <option value="lifestyle">Lifestyle</option>
+                    </select>
+                    <div class="ac-wrap">
+                        <input id="user-vibes" type="text" placeholder="Try: dark sci-fi with emotional payoff" autocomplete="off" list="vibe-hints">
+                        <div class="ac-menu" id="ac-menu"></div>
+                    </div>
+                    <button class="primary" id="discover-btn">Discover</button>
+                    <button type="button" class="visual-btn" id="visual-search-btn" title="Visual vibe (upload image)">📷</button>
+                </div>
+                <input type="file" id="visual-file" accept="image/*" class="hidden">
+                <p id="vibe-check-text" style="margin-top: 10px; color: #3a5d9a;"></p>
+                <div class="shop-vibe-section">
+                    <div class="mood-strip-title">Shop the vibe</div>
+                    <div class="shop-grid" id="shop-grid"></div>
+                </div>
+            </div>
+            <aside class="hero-side">
+                <div>
+                    <h3>Your Taste DNA</h3>
+                    <p>Radar updates from likes, saves, and your quiz.</p>
+                </div>
+                <div class="radar-wrap">
+                    <svg id="radar-chart" width="200" height="200" viewBox="0 0 200 200"></svg>
+                    <p class="dna-summary" id="dna-summary">Finish the taste quiz or like a few cards to unlock your graph.</p>
+                </div>
+            </aside>
+        </section>
+
+        <section>
+            <div class="row-title"><h2 id="row-main-title">Today’s AI picks</h2><span style="color:#6d7c9f;font-size:.86rem;">Mood + taste memory weighted</span></div>
+            <div id="row-main" class="row"></div>
+        </section>
+        <section>
+            <div class="row-title"><h2>Trending Now</h2><span style="color:#6d7c9f;font-size:.86rem;">Popularity + trend weighted</span></div>
+            <div id="row-trending" class="row"></div>
+        </section>
+        <section>
+            <div class="row-title"><h2>Hidden Gems</h2><span style="color:#6d7c9f;font-size:.86rem;">High match, lower mainstream</span></div>
+            <div id="row-gems" class="row"></div>
+        </section>
+    </main>
+
+    <div id="onboard-overlay" class="onboard-overlay" aria-hidden="true">
+        <div class="onboard-card">
+            <h3>Discover your aesthetic</h3>
+            <p style="color:var(--muted);font-size:.9rem;">Image-forward onboarding — we map your DNA instantly.</p>
+            <div class="onboard-step" data-step="palette">
+                <strong>Color palette</strong>
+                <div class="pick-grid" id="pick-palette"></div>
+            </div>
+            <div class="onboard-step" data-step="room">
+                <strong>Room vibe</strong>
+                <div class="pick-grid" id="pick-room"></div>
+            </div>
+            <div class="onboard-step" data-step="fashion">
+                <strong>Fashion lane</strong>
+                <div class="pick-grid" id="pick-fashion"></div>
+            </div>
+            <div class="onboard-step" data-step="movie">
+                <strong>Poster energy</strong>
+                <div class="pick-grid" id="pick-movie"></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px;">
+                <button type="button" class="primary" id="onboard-save" style="flex:1;">Save &amp; personalize</button>
+                <button type="button" id="onboard-skip" style="flex:1;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="curator-fab" id="curator-fab" aria-label="Open AI curator">✦</button>
+    <div id="curator-panel" class="curator-panel">
+        <div class="curator-head">
+            <span>Aevora Curator</span>
+            <button type="button" id="curator-close" style="border:none;background:transparent;cursor:pointer;font-size:1.2rem;">×</button>
+        </div>
+        <div class="curator-messages" id="curator-messages"></div>
+        <div class="curator-input-row">
+            <input type="text" id="curator-input" placeholder="Ask for cozy movies, desk setups…">
+            <button type="button" class="primary" id="curator-send">Send</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+        <span id="toast-msg"></span>
+        <button type="button" id="toast-retry" class="hidden">Retry</button>
+    </div>
+
+    <script>
+        const PLACEHOLDER_IMG = 'https://placehold.co/900x600/f4f8ff/1e2b4d?text=No+Image';
+        const DEFAULT_API_PORT = '3000';
+        const API_BASE = (() => {
+            if (typeof window.__AEVORA_API_BASE__ === 'string' && window.__AEVORA_API_BASE__.length) {
+                return window.__AEVORA_API_BASE__.replace(/\/$/, '');
+            }
+            if (location.protocol === 'file:') return `http://127.0.0.1:${DEFAULT_API_PORT}`;
+            return '';
+        })();
+
+        const MOODS = [
+            { id: 'calm', label: 'Calm' },
+            { id: 'focused', label: 'Focused' },
+            { id: 'emotional', label: 'Emotional' },
+            { id: 'energetic', label: 'Energetic' },
+            { id: 'lonely', label: 'Lonely' },
+            { id: 'romantic', label: 'Romantic' },
+            { id: 'productive', label: 'Productive' },
+            { id: 'cozy', label: 'Cozy' },
+            { id: 'dark_academia', label: 'Dark Academia' },
+            { id: 'cyberpunk', label: 'Cyberpunk' },
+        ];
+
+        const SHOP_PRESETS = [
+            { title: 'Cyberpunk Workspace', sub: 'Neon desk + synth + sci-fi', mood: 'cyberpunk', type: 'products', q: 'cyberpunk rgb keyboard monitor neon desk setup' },
+            { title: 'Cozy Night In', sub: 'Rain sounds energy', mood: 'cozy', type: 'movies', q: 'cozy rainy night emotional slow films' },
+            { title: 'Dark Academia', sub: 'Scholarly + moody', mood: 'dark_academia', type: 'books', q: 'dark academia gothic library scholarly fiction' },
+            { title: 'Luxury Tech', sub: 'Premium gadgets', mood: 'productive', type: 'products', q: 'premium minimalist luxury tech gadgets desk' },
+            { title: 'Late Focus', sub: 'Deep work flow', mood: 'focused', type: 'music', q: 'instrumental focus ambient deep work' },
+            { title: 'Romantic Glow', sub: 'Soft + intimate', mood: 'romantic', type: 'lifestyle', q: 'romantic soft lighting aesthetic interior' },
+        ];
+
+        const AC_SUGGESTIONS = [
+            'dark sci-fi like Blade Runner emotional',
+            'cozy hygge films rainy night',
+            'minimalist Scandinavian desk setup',
+            'cyberpunk neon street fashion',
+            'dark academia library mystery books',
+            'luxury skincare routine aesthetic',
+            'emotional space opera TV',
+            'lo-fi beats study session',
+        ];
+
+        let selectedMood = 'emotional';
+        let lastRecTitles = [];
+        let onboardSelections = { palette: null, room: null, fashion: null, movie: null };
+        let acIndex = -1;
+
+        function apiUrl(path) {
+            const p = path.startsWith('/') ? path : `/${path}`;
+            return `${API_BASE}${p}`;
+        }
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s == null ? '' : String(s);
+            return d.innerHTML;
+        }
+
+        function formatFetchError(err) {
+            const msg = err && err.message ? String(err.message) : 'Request failed';
+            if (/Failed to fetch|NetworkError|Load failed|ECONNREFUSED/i.test(msg)) {
+                if (location.protocol === 'file:') {
+                    return 'Open via http://127.0.0.1:' + DEFAULT_API_PORT + '/ after npm start (not as a local file).';
+                }
+                return 'Cannot reach the API — is the server running?';
+            }
+            return msg;
+        }
+
+        let toastRetryAction = null;
+        function showToast(message, opts = {}) {
+            const toast = document.getElementById('toast');
+            const tmsg = document.getElementById('toast-msg');
+            const retryBtn = document.getElementById('toast-retry');
+            tmsg.textContent = message;
+            if (opts.retry) {
+                toastRetryAction = opts.retry;
+                retryBtn.classList.remove('hidden');
+            } else {
+                toastRetryAction = null;
+                retryBtn.classList.add('hidden');
+            }
+            toast.classList.add('show');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('show'), opts.duration || 9000);
+        }
+        document.getElementById('toast-retry').addEventListener('click', () => {
+            if (typeof toastRetryAction === 'function') toastRetryAction();
+        });
+
+        const splash = document.getElementById('splash');
+        const authOverlay = document.getElementById('auth-overlay');
+        const authError = document.getElementById('auth-error');
+        const userChip = document.getElementById('user-chip');
+        const greeting = document.getElementById('greeting');
+        const vibeText = document.getElementById('vibe-check-text');
+        const bodyRoot = document.getElementById('body-root');
+        const heroRotator = document.getElementById('hero-rotator');
+        const userState = JSON.parse(localStorage.getItem('aevora_session') || 'null');
+        const userId = userState?.user?.id || localStorage.getItem('aevora_guest_id') || crypto.randomUUID();
+        localStorage.setItem('aevora_guest_id', userId);
+
+        function applyThemeByTime() {
+            const h = new Date().getHours();
+            if (h >= 21 || h < 6) bodyRoot.classList.add('theme-night');
+            else bodyRoot.classList.remove('theme-night');
+        }
+
+        const ROTATOR_LINES = [
+            'Curated for your midnight creativity.',
+            'Mood-aware picks. Taste memory on.',
+            'Netflix depth × Pinterest soul × Apple polish.',
+            'Hover any card — see the reasoning layer.',
+        ];
+        let rotI = 0;
+        function tickHeroRotator() {
+            heroRotator.style.opacity = '0';
+            setTimeout(() => {
+                rotI = (rotI + 1) % ROTATOR_LINES.length;
+                heroRotator.textContent = ROTATOR_LINES[rotI];
+                heroRotator.style.opacity = '1';
+            }, 220);
+        }
+
+        function renderGreeting() {
+            const hour = new Date().getHours();
+            const phrase = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
+            const name = userState?.user?.name || 'Guest';
+            greeting.textContent = `${phrase}, ${name}`;
+            userChip.textContent = name;
+        }
+
+        function syncRowTitle() {
+            const mt = document.getElementById('row-main-title');
+            const moodLabel = MOODS.find((x) => x.id === selectedMood)?.label || '';
+            mt.textContent = `${moodLabel} recommendations`;
+        }
+
+        function initMoodStrip() {
+            const el = document.getElementById('mood-strip');
+            el.innerHTML = '';
+            for (const m of MOODS) {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'mood-pill' + (m.id === selectedMood ? ' active' : '');
+                b.textContent = m.label;
+                b.addEventListener('click', () => {
+                    selectedMood = m.id;
+                    el.querySelectorAll('.mood-pill').forEach((x) => x.classList.remove('active'));
+                    b.classList.add('active');
+                    syncRowTitle();
+                    fetchVault();
+                });
+                el.appendChild(b);
+            }
+            syncRowTitle();
+        }
+
+        function initShopGrid() {
+            const grid = document.getElementById('shop-grid');
+            grid.innerHTML = '';
+            for (const p of SHOP_PRESETS) {
+                const t = document.createElement('button');
+                t.type = 'button';
+                t.className = 'shop-tile';
+                t.innerHTML = `${escapeHtml(p.title)}<span>${escapeHtml(p.sub)}</span>`;
+                t.addEventListener('click', () => {
+                    selectedMood = p.mood;
+                    initMoodStrip();
+                    document.getElementById('rec-type').value = p.type;
+                    document.getElementById('user-vibes').value = p.q;
+                    fetchVault();
+                    showToast(`Loaded “${p.title}” — Discover to explore the full stack.`);
+                });
+                grid.appendChild(t);
+            }
+        }
+
+        function initOnboardingPicks() {
+            const grids = {
+                palette: [
+                    { v: 'moonlit', t: '🌙', l: 'Moonlit' },
+                    { v: 'dawn', t: '🌅', l: 'Dawn' },
+                    { v: 'neon', t: '💠', l: 'Neon' },
+                    { v: 'parchment', t: '📜', l: 'Parchment' },
+                    { v: 'forest', t: '🌲', l: 'Forest' },
+                ],
+                room: [
+                    { v: 'library', t: '📚', l: 'Library' },
+                    { v: 'loft', t: '🏙️', l: 'Loft' },
+                    { v: 'cafe', t: '☕', l: 'Café' },
+                    { v: 'studio', t: '🎛️', l: 'Studio' },
+                    { v: 'greenhouse', t: '🪴', l: 'Greenhouse' },
+                ],
+                fashion: [
+                    { v: 'minimal', t: '⬜', l: 'Minimal' },
+                    { v: 'street', t: '🛹', l: 'Street' },
+                    { v: 'vintage', t: '🎞️', l: 'Vintage' },
+                    { v: 'avantgarde', t: '🎭', l: 'Avant' },
+                    { v: 'quietluxury', t: '✨', l: 'Quiet luxury' },
+                ],
+                movie: [
+                    { v: 'scifi', t: '🛸', l: 'Sci‑fi' },
+                    { v: 'romance', t: '💫', l: 'Romance' },
+                    { v: 'thriller', t: '🔦', l: 'Thriller' },
+                    { v: 'documentary', t: '🌍', l: 'Doc' },
+                    { v: 'anime', t: '🎌', l: 'Anime' },
+                ],
+            };
+            for (const [key, id] of [['palette', 'pick-palette'], ['room', 'pick-room'], ['fashion', 'pick-fashion'], ['movie', 'pick-movie']]) {
+                const host = document.getElementById(id);
+                host.innerHTML = '';
+                for (const o of grids[key]) {
+                    const d = document.createElement('div');
+                    d.className = 'pick-opt';
+                    d.innerHTML = `<span class="emoji">${o.t}</span>${escapeHtml(o.l)}`;
+                    d.addEventListener('click', () => {
+                        host.querySelectorAll('.pick-opt').forEach((x) => x.classList.remove('selected'));
+                        d.classList.add('selected');
+                        onboardSelections[key] = o.v;
+                    });
+                    host.appendChild(d);
+                }
+            }
+        }
+
+        async function postOnboarding() {
+            try {
+                await fetch(apiUrl('/api/v1/profile/onboarding'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, answers: onboardSelections }),
+                });
+            } catch (e) {
+                console.warn('Onboarding sync', e);
+            }
+            await refreshTasteDNA();
+        }
+
+        async function refreshTasteDNA() {
+            try {
+                const res = await fetch(apiUrl(`/api/v1/taste-dna?userId=${encodeURIComponent(userId)}`));
+                const data = await res.json();
+                if (!data.success || !data.taste_dna) return;
+                drawRadar(data.taste_dna.axes || {});
+                document.getElementById('dna-summary').textContent = data.taste_dna.summary || '';
+            } catch (e) {
+                console.warn('DNA', e);
+            }
+        }
+
+        function drawRadar(axes) {
+            const svg = document.getElementById('radar-chart');
+            const keys = ['minimalist', 'futuristic', 'emotional', 'luxury', 'cozy'];
+            const labels = ['Minimal', 'Future', 'Emotional', 'Luxury', 'Cozy'];
+            const cx = 100, cy = 100, r = 72;
+            const pts = keys.map((k, i) => {
+                const v = Math.min(100, Math.max(0, Number(axes[k] || 40)));
+                const a = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
+                const rr = (r * v) / 100;
+                return `${cx + rr * Math.cos(a)},${cy + rr * Math.sin(a)}`;
+            });
+            const ring = keys
+                .map((_, i) => {
+                    const a = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
+                    return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
+                })
+                .join(' ');
+            svg.innerHTML = `
+                <polygon fill="rgba(74,144,255,0.15)" stroke="#4a90ff" stroke-width="2" points="${pts.join(' ')}"/>
+                <polygon fill="none" stroke="var(--border)" stroke-width="1" points="${ring}"/>
+                ${keys
+                    .map((_, i) => {
+                        const a = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
+                        const lx = cx + (r + 16) * Math.cos(a);
+                        const ly = cy + (r + 16) * Math.sin(a);
+                        return `<text x="${lx}" y="${ly}" text-anchor="middle" fill="var(--muted)" font-size="9">${labels[i]}</text>`;
+                    })
+                    .join('')}
+            `;
+        }
+
+        function pushRecentSearch(q) {
+            const key = 'aevora_recent_searches';
+            let arr = [];
+            try {
+                arr = JSON.parse(localStorage.getItem(key) || '[]');
+            } catch {
+                arr = [];
+            }
+            arr = [q, ...arr.filter((x) => x !== q)].slice(0, 8);
+            localStorage.setItem(key, JSON.stringify(arr));
+        }
+
+        function openAc(filter) {
+            const menu = document.getElementById('ac-menu');
+            const q = (filter || '').toLowerCase();
+            let recent = [];
+            try {
+                recent = JSON.parse(localStorage.getItem('aevora_recent_searches') || '[]');
+            } catch {
+                recent = [];
+            }
+            const pool = [...new Set([...recent, ...AC_SUGGESTIONS])];
+            const list = !q ? pool : pool.filter((s) => s.toLowerCase().includes(q));
+            menu.innerHTML = '';
+            list.slice(0, 8).forEach((text, idx) => {
+                const div = document.createElement('div');
+                div.className = 'ac-item' + (idx === 0 ? ' active' : '');
+                div.textContent = text;
+                div.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    document.getElementById('user-vibes').value = text;
+                    menu.classList.remove('open');
+                    fetchVault();
+                });
+                menu.appendChild(div);
+            });
+            menu.classList.toggle('open', list.length > 0);
+            acIndex = 0;
+        }
+
+        setTimeout(() => splash.classList.add('hide'), 2000);
+        setTimeout(() => {
+            if (!userState) authOverlay.classList.remove('hidden');
+            renderGreeting();
+            applyThemeByTime();
+            setInterval(tickHeroRotator, 5200);
+            setInterval(applyThemeByTime, 60000);
+            if (!localStorage.getItem('aevora_onboarded')) {
+                document.getElementById('onboard-overlay').classList.add('open');
+            }
+        }, 2100);
+
+        document.getElementById('onboard-save').addEventListener('click', async () => {
+            localStorage.setItem('aevora_onboarded', '1');
+            document.getElementById('onboard-overlay').classList.remove('open');
+            await postOnboarding();
+            showToast('Taste DNA updated from your quiz.');
+            fetchVault();
+        });
+        document.getElementById('onboard-skip').addEventListener('click', () => {
+            localStorage.setItem('aevora_onboarded', '1');
+            document.getElementById('onboard-overlay').classList.remove('open');
+        });
+        document.getElementById('taste-quiz-btn').addEventListener('click', () => {
+            document.getElementById('onboard-overlay').classList.add('open');
+        });
+
+        async function authCall(endpoint, payload) {
+            let response;
+            try {
+                response = await fetch(apiUrl(`/api/v1/auth/${endpoint}`), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload || {}),
+                });
+            } catch (err) {
+                throw new Error(formatFetchError(err));
+            }
+            let data;
+            try {
+                data = await response.json();
+            } catch {
+                throw new Error(response.ok ? 'Invalid response from server (not JSON).' : `Server error (${response.status}).`);
+            }
+            if (!data.success) throw new Error(data.error || 'Authentication failed.');
+            localStorage.setItem('aevora_session', JSON.stringify(data));
+            location.reload();
+        }
+
+        document.getElementById('signup-btn').addEventListener('click', async () => {
+            try {
+                authError.textContent = '';
+                await authCall('signup', {
+                    name: document.getElementById('auth-name').value,
+                    email: document.getElementById('auth-email').value,
+                    password: document.getElementById('auth-password').value,
+                });
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            try {
+                authError.textContent = '';
+                await authCall('login', {
+                    email: document.getElementById('auth-email').value,
+                    password: document.getElementById('auth-password').value,
+                });
+            } catch (error) {
+                authError.textContent = error.message;
+            }
+        });
+        document.getElementById('guest-btn').addEventListener('click', async () => {
+            await authCall('guest');
+        });
+        document.getElementById('google-btn').addEventListener('click', () => {
+            authError.textContent = 'Google OAuth can be wired in Phase 2 (Auth.js/Supabase).';
+        });
+        document.getElementById('forgot-btn').addEventListener('click', () => {
+            authError.textContent = 'Password reset email flow can be wired in Phase 2.';
+        });
+
+        function renderRow(targetId, items, domain) {
+            const row = document.getElementById(targetId);
+            row.innerHTML = '';
+            if (!items.length) {
+                row.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+                return;
+            }
+            for (const item of items) {
+                const card = document.createElement('article');
+                card.className = 'card';
+                const badges = (item.ai_insights || [])
+                    .map((b) => `<span class="insight-badge">${escapeHtml(b.label)} · ${escapeHtml(b.value)}</span>`)
+                    .join('');
+                const preview = escapeHtml((item.why_recommended || '').slice(0, 160));
+                const t = escapeHtml(item.title || 'Untitled');
+                const imgSrc = escapeHtml(item.image || PLACEHOLDER_IMG);
+                card.innerHTML = `
+                    <div class="card-preview">AI insight — ${preview}${(item.why_recommended || '').length > 160 ? '…' : ''}</div>
+                    <div class="cover-wrap">
+                        <img class="cover" loading="lazy" src="${imgSrc}" alt="${t}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="title">${t}</h3>
+                        <p class="meta">${escapeHtml(item.genre || '')} ${item.source ? '· ' + escapeHtml(item.source) : ''}</p>
+                        <div class="insight-row">${badges}</div>
+                        <div class="stats">
+                            <div class="stat">Match ${item.match_percent || 0}%</div>
+                            <div class="stat">Mood ${item.emotional_match != null ? item.emotional_match + '%' : '—'}</div>
+                            <div class="stat">Taste ${item.similar_user_score != null ? item.similar_user_score + '%' : '—'}</div>
+                            <div class="stat">Trend ${item.trend_score || 0}%</div>
+                        </div>
+                        <div class="tags">${(item.tags || []).slice(0, 3).map((x) => `<span class="tag">${escapeHtml(x)}</span>`).join('')}</div>
+                        <p class="why">${escapeHtml(item.why_recommended || '')}</p>
+                        <div class="actions">
+                            <button type="button" class="icon-btn like">❤️ Like</button>
+                            <button type="button" class="icon-btn dislike">👎 Dislike</button>
+                            <button type="button" class="icon-btn save">🔖 Save</button>
+                        </div>
+                    </div>
+                `;
+                const like = card.querySelector('.like');
+                const dislike = card.querySelector('.dislike');
+                const save = card.querySelector('.save');
+                like.addEventListener('click', () => feedback(item, 'like', domain, like));
+                dislike.addEventListener('click', () => feedback(item, 'dislike', domain, dislike));
+                save.addEventListener('click', () => feedback(item, 'save', domain, save));
+                row.appendChild(card);
+            }
+        }
+
+        async function feedback(item, action, domain, el) {
+            try {
+                const res = await fetch(apiUrl('/api/v1/feedback'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId,
+                        itemId: item.id,
+                        action,
+                        tags: item.tags || [],
+                        title: item.title,
+                        domain,
+                    }),
+                });
+                if (!res.ok) throw new Error(`Feedback failed (${res.status})`);
+                if (action === 'like') el.classList.add('hit');
+                if (action === 'dislike') el.classList.add('hit');
+                setTimeout(() => el.classList.remove('hit'), 250);
+                refreshTasteDNA();
+            } catch (error) {
+                console.error('Feedback error', error);
+                showToast(formatFetchError(error));
+            }
+        }
+
+        async function fetchVault() {
+            const type = document.getElementById('rec-type').value;
+            const vibes = document.getElementById('user-vibes').value.trim();
+            if (!vibes) return;
+            pushRecentSearch(vibes);
+            renderRow('row-main', [], type);
+            renderRow('row-trending', [], type);
+            renderRow('row-gems', [], type);
+            try {
+                const response = await fetch(apiUrl('/api/v1/suggest'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, vibes, userId, mood: selectedMood }),
+                });
+                let data;
+                try {
+                    data = await response.json();
+                } catch {
+                    throw new Error(response.ok ? 'Invalid JSON from recommendation API.' : `API error (${response.status}).`);
+                }
+                if (!data.success) throw new Error(data.error || 'Recommendation request failed.');
+                const prefix = data.degraded ? '⚠ Limited mode — ' : '';
+                vibeText.textContent = prefix + (data.vibe_check || '');
+                if (data.taste_dna) {
+                    drawRadar(data.taste_dna.axes || {});
+                    document.getElementById('dna-summary').textContent = data.taste_dna.summary || '';
+                }
+                if (data.degraded) {
+                    showToast('Some live sources failed — showing fallback or partial results.', { retry: () => fetchVault() });
+                }
+                const sorted = data.recommendations || [];
+                lastRecTitles = sorted.map((x) => x.title).filter(Boolean);
+                const trending = [...sorted].sort((a, b) => b.trend_score + b.popularity_score - (a.trend_score + a.popularity_score)).slice(0, 12);
+                const gems = [...sorted].filter((x) => (x.popularity_score || 0) < 70).slice(0, 12);
+                renderRow('row-main', sorted.slice(0, 12), data.domain);
+                renderRow('row-trending', trending, data.domain);
+                renderRow('row-gems', gems.length ? gems : sorted.slice(0, 12), data.domain);
+            } catch (error) {
+                const human = formatFetchError(error);
+                vibeText.textContent = human;
+                showToast(human, { retry: () => fetchVault(), duration: 12000 });
+                renderRow('row-main', [], type);
+                renderRow('row-trending', [], type);
+                renderRow('row-gems', [], type);
+            }
+        }
+
+        const vibesInput = document.getElementById('user-vibes');
+        vibesInput.addEventListener('focus', () => openAc(vibesInput.value));
+        vibesInput.addEventListener('input', () => openAc(vibesInput.value));
+        vibesInput.addEventListener('blur', () => setTimeout(() => document.getElementById('ac-menu').classList.remove('open'), 160));
+        vibesInput.addEventListener('keydown', (e) => {
+            const menu = document.getElementById('ac-menu');
+            const items = [...menu.querySelectorAll('.ac-item')];
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const active = items.find((x) => x.classList.contains('active'));
+                if (active) vibesInput.value = active.textContent;
+                menu.classList.remove('open');
+                fetchVault();
+                return;
+            }
+            if (!menu.classList.contains('open')) return;
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                acIndex = Math.min(items.length - 1, acIndex + 1);
+                items.forEach((x, i) => x.classList.toggle('active', i === acIndex));
+            }
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                acIndex = Math.max(0, acIndex - 1);
+                items.forEach((x, i) => x.classList.toggle('active', i === acIndex));
+            }
+        });
+
+        document.getElementById('discover-btn').addEventListener('click', fetchVault);
+
+        document.getElementById('visual-search-btn').addEventListener('click', () => document.getElementById('visual-file').click());
+        document.getElementById('visual-file').addEventListener('change', async (ev) => {
+            const f = ev.target.files && ev.target.files[0];
+            ev.target.value = '';
+            if (!f || !f.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = async () => {
+                const dataUrl = reader.result;
+                const base64 = String(dataUrl).split(',')[1];
+                try {
+                    showToast('Analyzing image…');
+                    const res = await fetch(apiUrl('/api/v1/curator/visual-vibe'), {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageBase64: base64, mimeType: f.type }),
+                    });
+                    const out = await res.json();
+                    if (!out.success) throw new Error(out.error || 'Visual analysis failed');
+                    if (out.mood && MOODS.some((m) => m.id === out.mood)) {
+                        selectedMood = out.mood;
+                        initMoodStrip();
+                    }
+                    document.getElementById('user-vibes').value = out.vibes || '';
+                    fetchVault();
+                    showToast('Visual vibe applied — Discover refreshed.');
+                } catch (err) {
+                    showToast(formatFetchError(err));
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+
+        function curatorAppend(role, text) {
+            const box = document.getElementById('curator-messages');
+            const d = document.createElement('div');
+            d.className = 'curator-msg ' + (role === 'user' ? 'user' : 'bot');
+            d.textContent = text;
+            box.appendChild(d);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        document.getElementById('curator-fab').addEventListener('click', () => {
+            document.getElementById('curator-panel').classList.toggle('open');
+        });
+        document.getElementById('curator-close').addEventListener('click', () => {
+            document.getElementById('curator-panel').classList.remove('open');
+        });
+
+        async function sendCurator() {
+            const input = document.getElementById('curator-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+            input.value = '';
+            curatorAppend('user', msg);
+            try {
+                const res = await fetch(apiUrl('/api/v1/curator/chat'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, message: msg, contextTitles: lastRecTitles }),
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Curator error');
+                curatorAppend('bot', data.reply);
+            } catch (e) {
+                curatorAppend('bot', formatFetchError(e));
+            }
+        }
+        document.getElementById('curator-send').addEventListener('click', sendCurator);
+        document.getElementById('curator-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendCurator();
+        });
+
+        renderGreeting();
+        heroRotator.style.transition = 'opacity .35s ease';
+        document.getElementById('user-vibes').value = 'minimal blue aesthetic and emotional sci-fi';
+        applyThemeByTime();
+        initMoodStrip();
+        initShopGrid();
+        initOnboardingPicks();
+        refreshTasteDNA();
+        fetchVault();
+    </script>
+</body>
+</html>

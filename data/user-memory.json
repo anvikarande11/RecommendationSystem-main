@@ -1,0 +1,537 @@
+{
+  "users": {
+    "anonymous": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:26:08.465Z"
+        },
+        {
+          "query": "spicy comfort dinner",
+          "domain": "food",
+          "at": "2026-05-05T19:08:16.028Z"
+        },
+        {
+          "query": "dark sci-fi emotional storytelling",
+          "domain": "movies",
+          "at": "2026-05-05T19:08:13.537Z"
+        },
+        {
+          "query": "spicy comfort dinner",
+          "domain": "food",
+          "at": "2026-05-05T19:06:30.112Z"
+        },
+        {
+          "query": "calm rainy music for studying",
+          "domain": "music",
+          "at": "2026-05-05T19:06:28.946Z"
+        },
+        {
+          "query": "dark sci-fi emotional storytelling",
+          "domain": "movies",
+          "at": "2026-05-05T19:06:28.296Z"
+        },
+        {
+          "query": "deep psychology and habits",
+          "domain": "books",
+          "at": "2026-05-05T19:05:34.887Z"
+        },
+        {
+          "query": "apple aesthetic minimal desk setup",
+          "domain": "products",
+          "at": "2026-05-05T19:05:34.330Z"
+        },
+        {
+          "query": "dark sci-fi emotional storytelling",
+          "domain": "movies",
+          "at": "2026-05-05T19:05:33.242Z"
+        }
+      ],
+      "tags": {}
+    },
+    "300f2bd1-8296-400d-9682-29c4e721d239": {
+      "likes": [
+        {
+          "itemId": "fakestore-19",
+          "action": "save",
+          "tags": [
+            "women's clothing"
+          ],
+          "domain": "dressing",
+          "title": "Opna Women's Short Sleeve Moisture",
+          "at": "2026-05-05T19:13:01.510Z"
+        },
+        {
+          "itemId": "fakestore-19",
+          "action": "like",
+          "tags": [
+            "women's clothing"
+          ],
+          "domain": "dressing",
+          "title": "Opna Women's Short Sleeve Moisture",
+          "at": "2026-05-05T19:12:59.986Z"
+        }
+      ],
+      "dislikes": [
+        {
+          "itemId": "fakestore-19",
+          "action": "dislike",
+          "tags": [
+            "women's clothing"
+          ],
+          "domain": "dressing",
+          "title": "Opna Women's Short Sleeve Moisture",
+          "at": "2026-05-05T19:13:00.900Z"
+        }
+      ],
+      "searches": [
+        {
+          "query": "dress",
+          "domain": "dressing",
+          "at": "2026-05-05T19:12:53.516Z"
+        },
+        {
+          "query": "sushi",
+          "domain": "food",
+          "at": "2026-05-05T19:12:43.403Z"
+        },
+        {
+          "query": "sunscreen",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:12:27.757Z"
+        },
+        {
+          "query": "sunscreen",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:12:23.696Z"
+        },
+        {
+          "query": "Dhurandhar",
+          "domain": "movies",
+          "at": "2026-05-05T19:12:04.197Z"
+        },
+        {
+          "query": "face mask",
+          "domain": "products",
+          "at": "2026-05-05T19:11:51.658Z"
+        },
+        {
+          "query": "the kite runner",
+          "domain": "books",
+          "at": "2026-05-05T19:11:24.429Z"
+        },
+        {
+          "query": "anime",
+          "domain": "movies",
+          "at": "2026-05-05T19:10:59.169Z"
+        },
+        {
+          "query": "sunscreen",
+          "domain": "products",
+          "at": "2026-05-05T19:10:24.511Z"
+        }
+      ],
+      "tags": {
+        "women's clothing": 1
+      }
+    },
+    "26e790d9-c3d5-4e43-9c77-8013c84b3bb2": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:27:27.202Z"
+        }
+      ],
+      "tags": {}
+    },
+    "d211d21e-6f35-4d1a-b201-4a083aabff51": {
+      "likes": [
+        {
+          "itemId": "fakestore-12",
+          "action": "save",
+          "tags": [
+            "electronics"
+          ],
+          "domain": "products",
+          "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+          "at": "2026-05-05T19:30:27.450Z"
+        },
+        {
+          "itemId": "fakestore-12",
+          "action": "like",
+          "tags": [
+            "electronics"
+          ],
+          "domain": "products",
+          "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+          "at": "2026-05-05T19:30:24.970Z"
+        }
+      ],
+      "dislikes": [
+        {
+          "itemId": "fakestore-12",
+          "action": "dislike",
+          "tags": [
+            "electronics"
+          ],
+          "domain": "products",
+          "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+          "at": "2026-05-05T19:30:26.515Z"
+        }
+      ],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:31:48.908Z"
+        },
+        {
+          "query": "pizza",
+          "domain": "food",
+          "at": "2026-05-05T19:31:33.823Z"
+        },
+        {
+          "query": "pizza",
+          "domain": "food",
+          "at": "2026-05-05T19:31:33.600Z"
+        },
+        {
+          "query": "chole",
+          "domain": "food",
+          "at": "2026-05-05T19:31:23.638Z"
+        },
+        {
+          "query": "chole",
+          "domain": "food",
+          "at": "2026-05-05T19:31:23.409Z"
+        },
+        {
+          "query": "book",
+          "domain": "products",
+          "at": "2026-05-05T19:31:03.680Z"
+        },
+        {
+          "query": "book",
+          "domain": "products",
+          "at": "2026-05-05T19:31:03.460Z"
+        },
+        {
+          "query": "book",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:30:56.891Z"
+        },
+        {
+          "query": "book",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:30:56.667Z"
+        },
+        {
+          "query": "phone",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:30:48.560Z"
+        },
+        {
+          "query": "phone",
+          "domain": "lifestyle",
+          "at": "2026-05-05T19:30:48.331Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:30:39.279Z"
+        },
+        {
+          "query": "phone",
+          "domain": "products",
+          "at": "2026-05-05T19:30:18.442Z"
+        },
+        {
+          "query": "phone",
+          "domain": "products",
+          "at": "2026-05-05T19:30:18.225Z"
+        },
+        {
+          "query": "phone",
+          "domain": "products",
+          "at": "2026-05-05T19:30:17.550Z"
+        },
+        {
+          "query": "habits",
+          "domain": "music",
+          "at": "2026-05-05T19:30:04.440Z"
+        },
+        {
+          "query": "habits",
+          "domain": "music",
+          "at": "2026-05-05T19:30:04.227Z"
+        },
+        {
+          "query": "baby",
+          "domain": "music",
+          "at": "2026-05-05T19:29:48.657Z"
+        },
+        {
+          "query": "baby",
+          "domain": "music",
+          "at": "2026-05-05T19:29:48.441Z"
+        },
+        {
+          "query": "baby",
+          "domain": "music",
+          "at": "2026-05-05T19:29:47.712Z"
+        },
+        {
+          "query": "phone",
+          "domain": "products",
+          "at": "2026-05-05T19:29:12.246Z"
+        },
+        {
+          "query": "phone",
+          "domain": "products",
+          "at": "2026-05-05T19:29:10.992Z"
+        },
+        {
+          "query": "face wash",
+          "domain": "products",
+          "at": "2026-05-05T19:28:52.592Z"
+        },
+        {
+          "query": "face wash",
+          "domain": "products",
+          "at": "2026-05-05T19:28:48.588Z"
+        },
+        {
+          "query": "sunscreen",
+          "domain": "products",
+          "at": "2026-05-05T19:28:34.937Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:28:19.476Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:27:58.773Z"
+        }
+      ],
+      "tags": {
+        "electronics": 1
+      }
+    },
+    "519dc059-8a13-4d2d-a325-5c0773ce32fa": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:34:01.175Z"
+        }
+      ],
+      "tags": {}
+    },
+    "guest-1778009655128": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:25:53.956Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:25:52.990Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-05T19:34:15.256Z"
+        }
+      ],
+      "tags": {}
+    },
+    "test": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "space",
+          "domain": "movies",
+          "at": "2026-05-06T04:31:26.228Z"
+        }
+      ],
+      "tags": {}
+    },
+    "db71a728-d8ae-4f1a-8d30-4a143fd3ced4": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:33:53.723Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:33:49.510Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:32:19.542Z"
+        }
+      ],
+      "tags": {}
+    },
+    "023e91fb-73a1-4d7f-bffa-86b4b0875bb6": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:40:48.280Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:40:03.662Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:39:50.960Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:39:42.510Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:33:02.507Z"
+        }
+      ],
+      "tags": {}
+    },
+    "02ca9e31-b837-4abd-b533-003c71f577fc": {
+      "likes": [],
+      "dislikes": [],
+      "searches": [
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:47:43.467Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:47:27.510Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:43:49.789Z"
+        },
+        {
+          "query": "hips dont lie",
+          "domain": "music",
+          "at": "2026-05-06T04:43:29.996Z"
+        },
+        {
+          "query": "hips dont lie",
+          "domain": "music",
+          "at": "2026-05-06T04:43:29.769Z"
+        },
+        {
+          "query": "instrumental focus ambient deep work",
+          "domain": "music",
+          "at": "2026-05-06T04:43:03.226Z"
+        },
+        {
+          "query": "cyberpunk rgb keyboard monitor neon desk setup",
+          "domain": "products",
+          "at": "2026-05-06T04:43:00.960Z"
+        },
+        {
+          "query": "romantic soft lighting aesthetic interior",
+          "domain": "lifestyle",
+          "at": "2026-05-06T04:42:55.879Z"
+        },
+        {
+          "query": "romantic soft lighting aesthetic interior",
+          "domain": "lifestyle",
+          "at": "2026-05-06T04:42:49.299Z"
+        },
+        {
+          "query": "premium minimalist luxury tech gadgets desk",
+          "domain": "products",
+          "at": "2026-05-06T04:42:44.624Z"
+        },
+        {
+          "query": "dark academia gothic library scholarly fiction",
+          "domain": "books",
+          "at": "2026-05-06T04:42:34.807Z"
+        },
+        {
+          "query": "cozy rainy night emotional slow films",
+          "domain": "movies",
+          "at": "2026-05-06T04:42:31.444Z"
+        },
+        {
+          "query": "pizza",
+          "domain": "food",
+          "at": "2026-05-06T04:42:18.192Z"
+        },
+        {
+          "query": "pizza",
+          "domain": "food",
+          "at": "2026-05-06T04:42:17.967Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:58.852Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:55.900Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:52.718Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:49.430Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:31.764Z"
+        },
+        {
+          "query": "minimal blue aesthetic and emotional sci-fi",
+          "domain": "movies",
+          "at": "2026-05-06T04:41:07.268Z"
+        }
+      ],
+      "tags": {}
+    }
+  }
+}
