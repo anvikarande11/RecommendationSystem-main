@@ -12,8 +12,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.htm'));
 });
 
-// Catch-all for SPA
-app.get('*', (req, res) => {
+// Catch-all for SPA - use middleware for Express 5.x compatibility
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.htm'));
 });
 
