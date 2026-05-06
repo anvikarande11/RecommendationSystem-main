@@ -116,14 +116,14 @@ app.use('/api/v1/auth', authLimiter, authRoutes);
 app.use('/api/v1/curator', apiLimiter, requireAuth, curatorRoutes);
 app.use('/api/v1', apiLimiter, requireAuth, vaultRoutes);
 
-// Fallback for root path
+// SPA Fallback - Serve index.htm for all non-API routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.htm'));
 });
 
-// 404 handler
-app.use((req, res) => {
-    res.status(404).json({ success: false, error: 'Not found.' });
+// Serve index.htm for all undefined routes (SPA support)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.htm'));
 });
 
 // Global error handler
