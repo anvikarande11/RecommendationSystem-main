@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: aevora-recommendation
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GEMINI_MODEL
+        value: gemini-2.0-flash
+      - key: CORS_ORIGINS
+        value: https://your-render-service.onrender.com
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TMDB_API_KEY
+        sync: false

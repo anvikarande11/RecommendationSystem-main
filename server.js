@@ -15,16 +15,31 @@ function parseCorsOrigins() {
     return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 
-// Middleware — reflect request origin when using credentials; allow file:// dev via explicit origins
-app.use(
-    cors({
-        origin: parseCorsOrigins(),
-        credentials: true,
+function corsConfig() {
+    const origin = parseCorsOrigins();
+    const wildcard = origin === true;
+    return {
+        origin,
+        credentials: !wildcard,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
-    })
+    };
+}
+
+// Middleware — reflect request origin when using credentials; allow file:// dev via explicit origins
+app.use(
+    cors(corsConfig())
 );
 app.use(express.json({ limit: '12mb' }));
+app.use((err, req, res, next) => {
+    if (err && err.type === 'entity.parse.failed') {
+        return res.status(400).json({
+            success: false,
+            error: 'Invalid JSON payload.',
+        });
+    }
+    return next(err);
+});
 app.use((req, res, next) => {
     const start = Date.now();
     res.on('finish', () => {
@@ -33,7 +48,7 @@ app.use((req, res, next) => {
     });
     next();
 });
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/v1/health', (req, res) => {
     res.json({
@@ -55,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`\n🚀 VibeVault Engine Running on http://127.0.0.1:${PORT}`);
-    console.log(`   Health: http://127.0.0.1:${PORT}/api/v1/health`);
+    console.log(`\n🚀 VibeVault Engine Running on port ${PORT}`);
+    console.log(`   Health: /api/v1/health`);
     console.log(`✨ Mode: Academic & Creative Tech enabled\n`);
 });

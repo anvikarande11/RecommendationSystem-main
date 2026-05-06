@@ -6,54 +6,54 @@
     <title>Aevora | Cinematic AI Discovery</title>
     <style>
         :root {
-            --bg: #f4f8ff;
-            --bg-2: #eaf2ff;
-            --accent: #4a90ff;
-            --accent-glow: rgba(74, 144, 255, 0.45);
-            --navy: #1e2b4d;
+            --bg: #f6f5f2;
+            --bg-2: #efede8;
+            --accent: #9a8f7d;
+            --accent-glow: rgba(154, 143, 125, 0.28);
+            --navy: #22211f;
             --card: #ffffff;
-            --glass: rgba(255, 255, 255, 0.62);
-            --muted: #6d7c9f;
-            --border: rgba(30, 43, 77, 0.12);
-            --shadow: 0 12px 40px rgba(64, 99, 171, 0.14);
-            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74, 144, 255, 0.2), transparent);
+            --glass: rgba(255, 255, 255, 0.72);
+            --muted: #6f675d;
+            --border: rgba(34, 33, 31, 0.12);
+            --shadow: 0 12px 30px rgba(60, 53, 46, 0.1);
+            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(190, 176, 154, 0.22), transparent);
         }
         body.theme-night {
-            --bg: #0c1222;
-            --bg-2: #151d33;
-            --navy: #e8edff;
-            --card: #1a2438;
-            --glass: rgba(22, 32, 56, 0.75);
-            --muted: #9aa8c7;
-            --border: rgba(120, 140, 190, 0.15);
-            --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(96, 165, 250, 0.25), transparent);
+            --bg: #1a1815;
+            --bg-2: #23201c;
+            --navy: #f4f1ea;
+            --card: #2a2622;
+            --glass: rgba(42, 38, 34, 0.78);
+            --muted: #c1b5a7;
+            --border: rgba(205, 186, 162, 0.18);
+            --shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+            --hero-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(162, 147, 126, 0.24), transparent);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Roboto, sans-serif; }
-        body { background: radial-gradient(circle at 8% 5%, #ffffff, var(--bg) 35%, var(--bg-2)); color: var(--navy); min-height: 100vh; overflow-x: hidden; transition: background .6s ease, color .4s ease; }
-        body.theme-night { background: radial-gradient(circle at 10% 0%, #1a2744, var(--bg) 40%, #0a0f1a); }
+        body { background: radial-gradient(circle at 8% 5%, #fffefb, var(--bg) 35%, var(--bg-2)); color: var(--navy); min-height: 100vh; overflow-x: hidden; transition: background .6s ease, color .4s ease; }
+        body.theme-night { background: radial-gradient(circle at 10% 0%, #2a2520, var(--bg) 40%, #13110f); }
         a { color: inherit; text-decoration: none; }
         .splash {
-            position: fixed; inset: 0; background: radial-gradient(circle at 50% 10%, #ffffff, #dce9ff 45%, #b9d3ff);
+            position: fixed; inset: 0; background: radial-gradient(circle at 50% 10%, #fffefb, #f2ede3 45%, #e9dfd0);
             display: grid; place-items: center; z-index: 2000; transition: opacity .8s ease, visibility .8s ease;
         }
         .splash.hide { opacity: 0; visibility: hidden; }
         .logo-wrap { text-align: center; animation: rise 1.2s ease; }
         .logo { font-size: 3rem; letter-spacing: 2px; font-weight: 700; color: var(--navy); }
-        .tagline { color: #314472; margin-top: 8px; }
+        .tagline { color: #5e564d; margin-top: 8px; }
         .dot-field { margin-top: 18px; display:flex; gap:8px; justify-content:center; }
         .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s infinite; }
         .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
         .app { max-width: 1280px; margin: 0 auto; padding: 18px; }
         .topnav { display:flex; justify-content:space-between; align-items:center; background: var(--glass); border:1px solid var(--border); box-shadow: var(--shadow); border-radius: 18px; padding: 10px 16px; backdrop-filter: blur(12px); position: sticky; top: 12px; z-index: 20; }
         .brand { display:flex; align-items:center; gap:10px; font-weight:700; }
-        .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(145deg,#4a90ff,#7ec6ff); box-shadow: inset 0 0 16px #ffffffa8; }
+        .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(145deg,#b7aa95,#d8cbb6); box-shadow: inset 0 0 16px #ffffffa8; }
         .brand-sub { color: var(--muted); font-size: .82rem; font-weight: 500; }
         .nav-actions { display:flex; gap: 8px; align-items:center; }
         .pill { padding: 8px 12px; border-radius: 999px; border:1px solid var(--border); background: #fff; font-size:.85rem; cursor: pointer; }
         .hero {
             margin-top: 16px; position: relative; overflow: hidden;
-            background: linear-gradient(125deg,#ffffffd9,#edf4ff8f);
+            background: linear-gradient(125deg,#fffdf8,#f7f2ea);
             border-radius: 26px; border:1px solid var(--border); box-shadow: var(--shadow);
             padding: 30px; display:grid; grid-template-columns: 1.15fr 1fr; gap:24px; align-items: stretch;
         }
@@ -65,12 +65,13 @@
         .hero p { color: var(--muted); margin-bottom: 14px; }
         .controls { display:grid; grid-template-columns: 170px 1fr 100px 44px; gap:10px; align-items: stretch; }
         input, select, button { border-radius: 12px; border:1px solid var(--border); padding: 12px; }
-        input, select { background: #fff; color: var(--navy); }
-        button.primary { background: linear-gradient(90deg,#4a90ff,#76b6ff); color: #fff; font-weight: 700; cursor: pointer; }
+        input, select { background: #fff; color: #111 !important; }
+        input::placeholder { color: #7c7468; }
+        button.primary { background: linear-gradient(90deg,#9a8f7d,#b8ab96); color: #fff; font-weight: 700; cursor: pointer; }
         .hero-side {
             position: relative; z-index: 1;
             border-radius: 20px; min-height: 260px;
-            background: linear-gradient(145deg, rgba(74,144,255,.12), rgba(126,198,255,.08));
+            background: linear-gradient(145deg, rgba(180,165,143,.16), rgba(208,196,178,.1));
             border:1px solid var(--border);
             display:flex; flex-direction: column; justify-content: space-between;
             padding: 18px; text-align: left;
@@ -112,19 +113,21 @@
         }
         .ac-menu.open { display: block; }
         .ac-item { padding: 10px 12px; font-size: .85rem; cursor: pointer; }
-        .ac-item:hover, .ac-item.active { background: rgba(74,144,255,.12); }
+        .ac-item:hover, .ac-item.active { background: rgba(170,156,132,.16); }
         .row-title { display:flex; justify-content:space-between; align-items:center; margin: 22px 0 10px; }
         .row-title h2 { font-size: 1.1rem; }
         .row { display:grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 8px; }
         .card {
             background: var(--card); border:1px solid var(--border); border-radius: 16px;
-            box-shadow: 0 8px 24px #6c9ef01f; overflow: visible; position: relative;
+            box-shadow: 0 8px 24px rgba(110, 97, 82, 0.16); overflow: visible; position: relative;
             transition: transform .35s cubic-bezier(.25,.8,.25,1), box-shadow .35s ease;
         }
-        .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 22px 48px rgba(74, 144, 255, 0.18); z-index: 5; }
+        .card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 22px 48px rgba(122, 109, 91, 0.22); z-index: 5; }
         .card .cover-wrap { overflow: hidden; border-radius: 16px 16px 0 0; perspective: 900px; }
         .card:hover .cover { transform: rotateY(-6deg) scale(1.06); }
-        .cover { width:100%; height: 168px; object-fit: cover; background: #dce9ff; transition: transform .45s cubic-bezier(.25,.8,.25,1); }
+        .cover { width:100%; height: 168px; object-fit: cover; background: #e8e1d6; transition: transform .45s cubic-bezier(.25,.8,.25,1); }
+        .thumb-strip { display:flex; gap:6px; margin: 8px 0 6px; }
+        .thumb { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border); background: #f2ece2; }
         .card-preview {
             position: absolute; left: 8px; right: 8px; bottom: 100%; margin-bottom: -56px; padding: 10px;
             background: var(--glass); backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 12px;
@@ -135,17 +138,17 @@
         .insight-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
         .insight-badge {
             font-size: .62rem; padding: 3px 8px; border-radius: 999px;
-            background: linear-gradient(90deg, rgba(74,144,255,.2), rgba(126,198,255,.15)); border: 1px solid var(--border);
+            background: linear-gradient(90deg, rgba(169,153,129,.22), rgba(208,192,170,.18)); border: 1px solid var(--border);
             font-weight: 600;
         }
         .card-body { padding: 11px; }
         .title { font-size: .92rem; min-height: 38px; margin-bottom: 5px; }
         .meta { color: var(--muted); font-size: .76rem; margin-bottom: 6px; min-height: 28px; }
         .stats { display:grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 7px; }
-        .stat { border:1px solid var(--border); border-radius: 9px; font-size: .72rem; padding: 5px 6px; color: #3f5178; background: #f8fbff; }
+        .stat { border:1px solid var(--border); border-radius: 9px; font-size: .72rem; padding: 5px 6px; color: #4b4339; background: #faf8f3; }
         .tags { display:flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-        .tag { font-size: .69rem; background: #e8f1ff; color: #2b4d89; border-radius: 999px; padding: 4px 8px; }
-        .why { font-size: .72rem; color: #48639a; min-height: 34px; margin-bottom: 8px; }
+        .tag { font-size: .69rem; background: #efe7da; color: #5e5346; border-radius: 999px; padding: 4px 8px; }
+        .why { font-size: .72rem; color: #5c5349; min-height: 34px; margin-bottom: 8px; }
         .actions { display:flex; gap: 7px; }
         .icon-btn { flex:1; border:1px solid var(--border); border-radius: 9px; background: #fff; padding: 8px; cursor: pointer; font-size: .74rem; transition: transform .18s ease; }
         .icon-btn:hover { transform: scale(1.03); }
@@ -164,11 +167,11 @@
         @keyframes shimmer { 0%{background-position:100% 0}100%{background-position:-100% 0} }
         .toast {
             position: fixed; bottom: 22px; right: 22px; max-width: min(420px, 92vw); z-index: 3000;
-            background: #1e2b4d; color: #f4f8ff; padding: 14px 16px; border-radius: 14px; font-size: .88rem;
-            box-shadow: 0 16px 40px rgba(30,43,77,.35); display: none; align-items: flex-start; gap: 12px;
+            background: #3d362d; color: #f5f2eb; padding: 14px 16px; border-radius: 14px; font-size: .88rem;
+            box-shadow: 0 16px 40px rgba(38,34,28,.35); display: none; align-items: flex-start; gap: 12px;
         }
         .toast.show { display: flex; animation: rise .35s ease; }
-        .toast button { flex-shrink: 0; border: none; background: #4a90ff; color: #fff; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: .8rem; }
+        .toast button { flex-shrink: 0; border: none; background: #a99882; color: #fff; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: .8rem; }
         @keyframes loading { 0%{background-position:0}100%{background-position:100%} }
         @keyframes pop { from{transform:scale(1)} to{transform:scale(1.1)} }
         @keyframes swipe { from{transform:translateX(0)} to{transform:translateX(-4px)} }
@@ -176,7 +179,7 @@
         @keyframes rise { from{transform:translateY(10px);opacity:0} to{transform:translateY(0);opacity:1} }
         .curator-fab {
             position: fixed; bottom: 88px; right: 22px; width: 56px; height: 56px; border-radius: 50%; border: none;
-            background: linear-gradient(145deg, #4a90ff, #7ec6ff); color: #fff; font-size: 1.4rem; cursor: pointer;
+            background: linear-gradient(145deg, #a99780, #c8b7a1); color: #fff; font-size: 1.4rem; cursor: pointer;
             box-shadow: 0 12px 32px var(--accent-glow); z-index: 2500; transition: transform .2s;
         }
         .curator-fab:hover { transform: scale(1.08); }
@@ -189,8 +192,8 @@
         .curator-head { padding: 12px 14px; border-bottom: 1px solid var(--border); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
         .curator-messages { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; font-size: .86rem; }
         .curator-msg { padding: 10px 12px; border-radius: 12px; max-width: 92%; line-height: 1.4; }
-        .curator-msg.user { align-self: flex-end; background: rgba(74,144,255,.18); }
-        .curator-msg.bot { align-self: flex-start; background: rgba(30,43,77,.06); }
+        .curator-msg.user { align-self: flex-end; background: rgba(161,146,121,.2); }
+        .curator-msg.bot { align-self: flex-start; background: rgba(63,54,45,.08); }
         .curator-input-row { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border); }
         .curator-input-row input { flex: 1; border-radius: 10px; border: 1px solid var(--border); padding: 10px; background: var(--card); color: var(--navy); }
         .onboard-overlay {
@@ -377,6 +380,10 @@
             if (typeof window.__AEVORA_API_BASE__ === 'string' && window.__AEVORA_API_BASE__.length) {
                 return window.__AEVORA_API_BASE__.replace(/\/$/, '');
             }
+            const isLocalHost = /^(localhost|127\.0\.0\.1)$/i.test(location.hostname || '');
+            if (isLocalHost && location.port && location.port !== DEFAULT_API_PORT) {
+                return `http://127.0.0.1:${DEFAULT_API_PORT}`;
+            }
             if (location.protocol === 'file:') return `http://127.0.0.1:${DEFAULT_API_PORT}`;
             return '';
         })();
@@ -471,13 +478,15 @@
         const bodyRoot = document.getElementById('body-root');
         const heroRotator = document.getElementById('hero-rotator');
         const userState = JSON.parse(localStorage.getItem('aevora_session') || 'null');
-        const userId = userState?.user?.id || localStorage.getItem('aevora_guest_id') || crypto.randomUUID();
+        function makeGuestId() {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+            return `guest-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        }
+        const userId = userState?.user?.id || localStorage.getItem('aevora_guest_id') || makeGuestId();
         localStorage.setItem('aevora_guest_id', userId);
 
         function applyThemeByTime() {
-            const h = new Date().getHours();
-            if (h >= 21 || h < 6) bodyRoot.classList.add('theme-night');
-            else bodyRoot.classList.remove('theme-night');
+            bodyRoot.classList.remove('theme-night');
         }
 
         const ROTATOR_LINES = [
@@ -694,8 +703,8 @@
             acIndex = 0;
         }
 
-        setTimeout(() => splash.classList.add('hide'), 2000);
         setTimeout(() => {
+            splash.classList.add('hide');
             if (!userState) authOverlay.classList.remove('hidden');
             renderGreeting();
             applyThemeByTime();
@@ -704,7 +713,7 @@
             if (!localStorage.getItem('aevora_onboarded')) {
                 document.getElementById('onboard-overlay').classList.add('open');
             }
-        }, 2100);
+        }, 2000);
 
         document.getElementById('onboard-save').addEventListener('click', async () => {
             localStorage.setItem('aevora_onboarded', '1');
@@ -776,11 +785,12 @@
             authError.textContent = 'Password reset email flow can be wired in Phase 2.';
         });
 
-        function renderRow(targetId, items, domain) {
+        function renderRow(targetId, items, domain, emptyMessage) {
             const row = document.getElementById(targetId);
             row.innerHTML = '';
             if (!items.length) {
-                row.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+                const msg = escapeHtml(emptyMessage || 'No precise matches yet. Refine your query for better accuracy.');
+                row.innerHTML = `<article class="card"><div class="card-body"><h3 class="title">No exact results</h3><p class="why">${msg}</p></div></article>`;
                 return;
             }
             for (const item of items) {
@@ -791,13 +801,18 @@
                     .join('');
                 const preview = escapeHtml((item.why_recommended || '').slice(0, 160));
                 const t = escapeHtml(item.title || 'Untitled');
-                const imgSrc = escapeHtml(item.image || PLACEHOLDER_IMG);
+                const gallery = Array.isArray(item.image_gallery) ? item.image_gallery.filter(Boolean).slice(0, 3) : [];
+                const imgSrc = escapeHtml(item.image || gallery[0] || PLACEHOLDER_IMG);
+                const thumbs = gallery
+                    .map((img) => `<img class="thumb" loading="lazy" src="${escapeHtml(img)}" alt="${t} image" onerror="this.style.display='none'">`)
+                    .join('');
                 card.innerHTML = `
                     <div class="card-preview">AI insight — ${preview}${(item.why_recommended || '').length > 160 ? '…' : ''}</div>
                     <div class="cover-wrap">
                         <img class="cover" loading="lazy" src="${imgSrc}" alt="${t}" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
                     </div>
                     <div class="card-body">
+                        ${thumbs ? `<div class="thumb-strip">${thumbs}</div>` : ''}
                         <h3 class="title">${t}</h3>
                         <p class="meta">${escapeHtml(item.genre || '')} ${item.source ? '· ' + escapeHtml(item.source) : ''}</p>
                         <div class="insight-row">${badges}</div>
@@ -872,29 +887,25 @@
                     throw new Error(response.ok ? 'Invalid JSON from recommendation API.' : `API error (${response.status}).`);
                 }
                 if (!data.success) throw new Error(data.error || 'Recommendation request failed.');
-                const prefix = data.degraded ? '⚠ Limited mode — ' : '';
-                vibeText.textContent = prefix + (data.vibe_check || '');
+                vibeText.textContent = data.vibe_check || '';
                 if (data.taste_dna) {
                     drawRadar(data.taste_dna.axes || {});
                     document.getElementById('dna-summary').textContent = data.taste_dna.summary || '';
-                }
-                if (data.degraded) {
-                    showToast('Some live sources failed — showing fallback or partial results.', { retry: () => fetchVault() });
                 }
                 const sorted = data.recommendations || [];
                 lastRecTitles = sorted.map((x) => x.title).filter(Boolean);
                 const trending = [...sorted].sort((a, b) => b.trend_score + b.popularity_score - (a.trend_score + a.popularity_score)).slice(0, 12);
                 const gems = [...sorted].filter((x) => (x.popularity_score || 0) < 70).slice(0, 12);
-                renderRow('row-main', sorted.slice(0, 12), data.domain);
-                renderRow('row-trending', trending, data.domain);
-                renderRow('row-gems', gems.length ? gems : sorted.slice(0, 12), data.domain);
+                renderRow('row-main', sorted.slice(0, 12), data.domain, data.vibe_check);
+                renderRow('row-trending', trending, data.domain, data.vibe_check);
+                renderRow('row-gems', gems.length ? gems : sorted.slice(0, 12), data.domain, data.vibe_check);
             } catch (error) {
                 const human = formatFetchError(error);
                 vibeText.textContent = human;
                 showToast(human, { retry: () => fetchVault(), duration: 12000 });
-                renderRow('row-main', [], type);
-                renderRow('row-trending', [], type);
-                renderRow('row-gems', [], type);
+                renderRow('row-main', [], type, human);
+                renderRow('row-trending', [], type, human);
+                renderRow('row-gems', [], type, human);
             }
         }
 

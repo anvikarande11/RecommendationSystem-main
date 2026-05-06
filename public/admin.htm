@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aevora Admin</title>
     <style>
-        :root { --bg:#0f172a; --panel:#111c36; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --accent:#60a5fa; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; }
+        :root { --bg:#f3f1ec; --panel:#ffffff; --card:#fbfaf7; --text:#26221c; --muted:#7a7063; --accent:#a28f76; --ok:#2e8b57; --warn:#b47f35; --bad:#b24b45; }
         *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Roboto,sans-serif}
         body{background:var(--bg);color:var(--text);min-height:100vh;display:grid;grid-template-columns:240px 1fr}
-        aside{background:#0b1224;border-right:1px solid #1f2a44;padding:16px}
+        aside{background:#f6f3ec;border-right:1px solid #ddd5c9;padding:16px}
         .brand{font-size:1.1rem;font-weight:700;margin-bottom:18px}
         .nav-item{display:block;padding:10px;border-radius:10px;color:var(--muted);margin-bottom:6px}
-        .nav-item.active,.nav-item:hover{background:#1a2742;color:#dbeafe}
+        .nav-item.active,.nav-item:hover{background:#ece4d8;color:#3b342c}
         main{padding:20px}
         .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
         .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
-        .kpi{background:var(--panel);padding:12px;border:1px solid #22304f;border-radius:12px}
+        .kpi{background:var(--panel);padding:12px;border:1px solid #ddd5c9;border-radius:12px}
         .kpi h4{color:var(--muted);font-size:.78rem;margin-bottom:6px}
         .kpi p{font-size:1.4rem;font-weight:700}
         .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-        .card{background:var(--card);border:1px solid #2a395d;border-radius:12px;padding:12px}
+        .card{background:var(--card);border:1px solid #ddd5c9;border-radius:12px;padding:12px}
         .list{margin-top:8px}
-        .list li{display:flex;justify-content:space-between;border-bottom:1px solid #2a395d;padding:7px 0;font-size:.86rem}
+        .list li{display:flex;justify-content:space-between;border-bottom:1px solid #ddd5c9;padding:7px 0;font-size:.86rem}
         .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
         @media(max-width:860px){body{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}}
     </style>
@@ -38,7 +38,7 @@
     <main>
         <div class="head">
             <h2>Recommendation Analytics Dashboard</h2>
-            <button onclick="loadSummary()" style="padding:8px 12px;border-radius:9px;border:1px solid #2a395d;background:#1f2d49;color:#dbeafe;cursor:pointer;">Refresh</button>
+            <button onclick="loadSummary()" style="padding:8px 12px;border-radius:9px;border:1px solid #d5ccbf;background:#efe7da;color:#3b342c;cursor:pointer;">Refresh</button>
         </div>
         <section class="kpis">
             <div class="kpi"><h4>Total Users</h4><p id="users">0</p></div>
@@ -63,6 +63,10 @@
         const API_BASE = (() => {
             if (typeof window.__AEVORA_API_BASE__ === 'string' && window.__AEVORA_API_BASE__.length) {
                 return window.__AEVORA_API_BASE__.replace(/\/$/, '');
+            }
+            const isLocalHost = /^(localhost|127\.0\.0\.1)$/i.test(location.hostname || '');
+            if (isLocalHost && location.port && location.port !== DEFAULT_API_PORT) {
+                return `http://127.0.0.1:${DEFAULT_API_PORT}`;
             }
             if (location.protocol === 'file:') return `http://127.0.0.1:${DEFAULT_API_PORT}`;
             return '';
